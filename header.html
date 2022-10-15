@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="./output.css" />
+    </head>
+    <body>
+        <div class="bg-slate-400">
+            <div
+                class="container mx-auto flex items-center justify-between py-2 px-2"
+            >
+                <h4 class="font-normal">
+                    <a href="/" class="text-white">Bloggler</a>
+                </h4>
+
+                <div class="flex gap-3 text-slate-200">
+                    <a
+                        href="/create-post"
+                        class="inline-block px-2 py-1 bg-green-900 rounded-sm"
+                        >Create Post</a
+                    >
+                    <form action="/logout" method="POST" class="inline">
+                        <button
+                            class="inline-block px-2 py-1 bg-red-500 rounded-sm"
+                        >
+                            Sign Out
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
