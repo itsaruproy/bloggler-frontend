@@ -32,36 +32,13 @@ const Profile = () => {
                         <Tab>Followers</Tab>
                         <Tab>Following</Tab>
                     </TabList>
-
-                    <TabPanels>
-                        <TabPanel>
-                            <Link>
-                                <Box bg={'gray.300'}>
-                                    <Text>The new carpet</Text>
-                                    <Text>02/10/2021</Text>
-                                </Box>
-                            </Link>
-                            <Link>
-                                <Box bg={'gray.300'}>
-                                    <Text>The new carpet</Text>
-                                    <Text>02/10/2021</Text>
-                                </Box>
-                            </Link>
-                            <Link>
-                                <Box bg={'gray.300'}>
-                                    <Text>The new carpet</Text>
-                                    <Text>02/10/2021</Text>
-                                </Box>
-                            </Link>
-                        </TabPanel>
-                        <TabPanel>
-                            <p>two!</p>
-                        </TabPanel>
-                        <TabPanel>
-                            <p>three!</p>
-                        </TabPanel>
-                    </TabPanels>
                 </Tabs>
+
+                {/* Here we'll return a div with the necessary contents using route tags not using tabpanels*/}
+
+                <Box>
+                    <Text>New Post</Text>
+                </Box>
             </Box>
         </Flex>
     )
