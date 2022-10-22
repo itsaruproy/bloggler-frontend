@@ -6,6 +6,7 @@ import GuestHome from './GuestHome'
 import Header from './Header'
 import Profile from './Profile'
 import SignUp from './SignUp'
+import ViewPost from './ViewPost'
 
 const App = () => {
     return (
@@ -15,7 +16,8 @@ const App = () => {
             {/* <SignUp /> */}
             {/* <GuestHome /> */}
             {/* <Profile /> */}
-            <CreatePost />
+            {/* <CreatePost /> */}
+            <ViewPost />
         </Box>
     )
 }

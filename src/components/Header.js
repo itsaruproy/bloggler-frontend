@@ -3,9 +3,8 @@ import { Box, Button, Flex, HStack, Input, Link } from '@chakra-ui/react'
 
 const Header = () => {
     return (
-        <Flex w={'100%'} bg={'gray.100'}>
+        <Flex maxW={'1200px'} bg={'gray.100'} mx={'auto'}>
             <Box
-                px={'10'}
                 py={'5'}
                 w={'100%'}
                 display={'flex'}
