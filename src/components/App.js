@@ -1,5 +1,6 @@
 import { Box } from '@chakra-ui/react'
 import React from 'react'
+import CreatePost from './CreatePost'
 import Error from './Error'
 import GuestHome from './GuestHome'
 import Header from './Header'
@@ -13,7 +14,8 @@ const App = () => {
             {/* <Error /> */}
             {/* <SignUp /> */}
             {/* <GuestHome /> */}
-            <Profile />
+            {/* <Profile /> */}
+            <CreatePost />
         </Box>
     )
 }
