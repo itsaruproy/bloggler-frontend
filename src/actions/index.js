@@ -74,28 +74,20 @@ export const signOut = () => {
     }
 }
 
-export const fetchLinks = () => async (dispatch, getState) => {
+export const fetchFeed = () => async (dispatch, getState) => {
     try {
         const { Token } = getState().auth
-        console.log(Token)
-        const response = await axios.post(BASE_URL + '/link/get', {
+        const response = await axios.post(BASE_URL + '/getHomeFeed', {
             token: Token,
         })
+        console.log(response.data)
 
-        let linksObj = {}
-        response.data.links.forEach(link => {
-            linksObj[link._id] = { ...link }
-        })
-
-        dispatch({
-            type: FETCH_LINKS,
-            payload: linksObj,
-        })
-    } catch (err) {
-        dispatch({
-            type: FETCH_LINKS,
-            payload: null,
-        })
+        /*
+            dispatch feed data to feed reducer
+        
+        */
+    } catch (e) {
+        console.log('problem')
     }
 }
 
