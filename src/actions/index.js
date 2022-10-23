@@ -36,19 +36,41 @@ export const signUp =
         }
     }
 
-export const signIn = code => {
-    localStorage.setItem('auth-token', code)
-    return {
-        type: SIGN_IN,
-        payload: code,
+export const signIn = (username, password) => async (dispatch, getState) => {
+    try {
+        const response = await axios.post(BASE_URL + '/login', {
+            username,
+            password,
+        })
+        // console.log(response.data);
+        if (response.data) {
+            // navigate("/")
+            console.log(response.data)
+            // console.log("logged in");
+            dispatch({
+                type: SIGN_IN,
+                payload: {
+                    token: response.data.token,
+                    username: response.data.username,
+                },
+            })
+        } else {
+            // alert("Incorrenct username or password")
+        }
+    } catch (e) {
+        console.log('There was a problem.')
     }
 }
 
 export const signOut = () => {
-    localStorage.removeItem('auth-token')
+    localStorage.removeItem('bloggler-token')
+    localStorage.removeItem('bloggler-username')
     return {
         type: SIGN_OUT,
-        payload: null,
+        payload: {
+            token: null,
+            username: null,
+        },
     }
 }
 

@@ -3,7 +3,13 @@ import { Button, HStack, Icon, Link as ChakraLink } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { AiOutlineUser } from 'react-icons/ai'
 
-const HeaderLoggedIn = () => {
+import { connect } from 'react-redux'
+import { signOut } from '../actions'
+
+const HeaderLoggedIn = props => {
+    const signOutHandler = () => {
+        props.signOut()
+    }
     return (
         <HStack spacing={'2'} alignItems={'center'}>
             <ChakraLink as={Link} to={'/profile/arup'}>
@@ -19,11 +25,11 @@ const HeaderLoggedIn = () => {
                 </Button>
             </ChakraLink>
 
-            <Button size={'sm'} colorScheme={'red'}>
+            <Button onClick={signOutHandler} size={'sm'} colorScheme={'red'}>
                 Log Out
             </Button>
         </HStack>
     )
 }
 
-export default HeaderLoggedIn
+export default connect(null, { signOut })(HeaderLoggedIn)

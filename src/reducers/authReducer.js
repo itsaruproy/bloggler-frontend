@@ -1,16 +1,25 @@
 import { SIGN_IN, SIGN_OUT } from '../actions/types'
 
 const INITIAL_STATE = {
-  Token: localStorage.getItem('auth-token'),
+    Token: localStorage.getItem('bloggler-token'),
+    Username: localStorage.getItem('bloggler-username'),
 }
 
 export default (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-    case SIGN_IN:
-      return { ...state, Token: action.payload }
-    case SIGN_OUT:
-      return { ...state, Token: action.payload }
-    default:
-      return state
-  }
+    switch (action.type) {
+        case SIGN_IN:
+            return {
+                ...state,
+                Token: action.payload.token,
+                Username: action.payload.username,
+            }
+        case SIGN_OUT:
+            return {
+                ...state,
+                Token: action.payload.token,
+                Username: action.payload.username,
+            }
+        default:
+            return state
+    }
 }

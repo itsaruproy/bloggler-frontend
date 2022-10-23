@@ -1,11 +1,23 @@
 import { HStack, Input, Button } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 
-const HeaderLoggedOut = () => {
+import { connect } from 'react-redux'
+import { signIn } from '../actions'
+
+const HeaderLoggedOut = props => {
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
+    const onSubmitHandler = () => {
+        props.signIn(username, password)
+    }
+
     return (
         <HStack>
             <HStack spacing={'2'}>
                 <Input
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
                     borderColor={'teal'}
                     _hover={{ opacity: 1 }}
                     size={'sm'}
@@ -14,6 +26,8 @@ const HeaderLoggedOut = () => {
                     placeholder={'Username'}
                 />
                 <Input
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
                     borderColor={'teal'}
                     _hover={{ opacity: 1 }}
                     size={'sm'}
@@ -22,11 +36,11 @@ const HeaderLoggedOut = () => {
                     placeholder={'Password'}
                 />
             </HStack>
-            <Button size={'sm'} colorScheme={'teal'}>
+            <Button onClick={onSubmitHandler} size={'sm'} colorScheme={'teal'}>
                 Sign In
             </Button>
         </HStack>
     )
 }
 
-export default HeaderLoggedOut
+export default connect(null, { signIn })(HeaderLoggedOut)
