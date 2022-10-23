@@ -26,5 +26,4 @@ const GuestHome = () => {
         </Box>
     )
 }
-
 export default GuestHome

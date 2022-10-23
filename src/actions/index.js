@@ -1,6 +1,7 @@
 import axios from 'axios'
 import history from '../history'
 import {
+    SIGN_UP,
     SIGN_IN,
     SIGN_OUT,
     FETCH_LINKS,
@@ -8,6 +9,32 @@ import {
     DELETE_TARGET,
 } from './types'
 import { BASE_URL } from '../constants'
+
+export const signUp =
+    (username, email, password) => async (dispatch, getState) => {
+        const ourRequest = axios.CancelToken.source()
+        try {
+            const response = await axios.post(
+                BASE_URL + '/register',
+                {
+                    username: username,
+                    email: email,
+                    password: password,
+                },
+                { cancelToken: ourRequest.token }
+            )
+            console.log(response.data)
+            // appDispatch({ type: 'login', data: response.data })
+            // // appDispatch({ type: "flashMessage", value: "Congrats! Welcome to your new account." })
+            // appDispatch({
+            //     type: 'flashMessage',
+            //     value: 'You have Successfully logged in',
+            //     isPos: 'success',
+            // })
+        } catch (e) {
+            console.log('There was a problem or the request was cancelled.')
+        }
+    }
 
 export const signIn = code => {
     localStorage.setItem('auth-token', code)

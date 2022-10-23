@@ -1,5 +1,7 @@
 import React from 'react'
 import { Box, Button, Flex, HStack, Input, Link } from '@chakra-ui/react'
+import HeaderLoggedIn from './HeaderLoggedIn'
+import HeaderLoggedOut from './HeaderLoggedOut'
 
 const Header = () => {
     return (
@@ -15,27 +17,7 @@ const Header = () => {
                     <Link fontWeight={'semibold'}>Bloggler</Link>
                 </Box>
                 <Box display={'flex'} gap={'2'}>
-                    <HStack spacing={'2'}>
-                        <Input
-                            borderColor={'teal'}
-                            _hover={{ opacity: 1 }}
-                            size={'sm'}
-                            type={'text'}
-                            autoComplete={'off'}
-                            placeholder={'Username'}
-                        />
-                        <Input
-                            borderColor={'teal'}
-                            _hover={{ opacity: 1 }}
-                            size={'sm'}
-                            type={'password'}
-                            autoComplete={'off'}
-                            placeholder={'Password'}
-                        />
-                    </HStack>
-                    <Button size={'sm'} colorScheme={'teal'}>
-                        Sign In
-                    </Button>
+                    <HeaderLoggedOut />
                 </Box>
             </Box>
         </Flex>

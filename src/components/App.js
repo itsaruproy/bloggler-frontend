@@ -20,6 +20,11 @@ const App = () => {
                     <Switch>
                         <Route
                             exact
+                            path="/profile/:username"
+                            component={Profile}
+                        />
+                        <Route
+                            exact
                             path="/profile/:username/*"
                             component={Profile}
                         />
