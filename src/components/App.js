@@ -8,6 +8,7 @@ import Header from './Header'
 import Profile from './Profile'
 import SignUp from './SignUp'
 import ViewPost from './ViewPost'
+import HomeController from './HomeController'
 
 import history from '../history'
 
@@ -28,7 +29,7 @@ const App = () => {
                             path="/profile/:username/*"
                             component={Profile}
                         />
-                        <Route exact path="/" component={GuestHome} />
+                        <Route exact path="/" component={HomeController} />
                         <Route exact path="/post/:id" component={ViewPost} />
                         {/* <Route path="/post/:id/edit" element={<EditPost />} /> */}
                         <Route
