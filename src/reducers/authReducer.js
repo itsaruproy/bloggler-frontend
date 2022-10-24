@@ -3,6 +3,7 @@ import { SIGN_IN, SIGN_OUT } from '../actions/types'
 const INITIAL_STATE = {
     Token: localStorage.getItem('bloggler-token'),
     Username: localStorage.getItem('bloggler-username'),
+    LoggedIn: Boolean(localStorage.getItem('bloggler-token')),
 }
 
 export default (state = INITIAL_STATE, action) => {
