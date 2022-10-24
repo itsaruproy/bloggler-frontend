@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
     Box,
     Button,
@@ -14,8 +14,19 @@ import {
 } from '@chakra-ui/react'
 import { AiOutlineUser } from 'react-icons/ai'
 import { NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { fetchProfileInfo } from '../actions'
 
-const Profile = () => {
+const Profile = props => {
+    const username = props.match.params.username
+    const { fetchProfileInfo } = props
+    console.log('Username from URL', username)
+
+    useEffect(() => {
+        fetchProfileInfo(username)
+        console.log('useEffect ran inside the fetch user data')
+    }, [username, fetchProfileInfo])
+
     return (
         <Flex alignItems={'center'} mt={'20'} flexDirection={'column'}>
             <Flex alignItems={'center'} gap={'5'}>
@@ -44,4 +55,7 @@ const Profile = () => {
     )
 }
 
-export default Profile
+const mapStateToProps = state => {
+    return { ProfileInfo: state.profileInfo }
+}
+export default connect(mapStateToProps, { fetchProfileInfo })(Profile)

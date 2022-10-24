@@ -4,9 +4,10 @@ import {
     SIGN_UP,
     SIGN_IN,
     SIGN_OUT,
-    FETCH_LINKS,
+    FETCH_FEED,
     ADD_NEW_TARGET,
     DELETE_TARGET,
+    FETCH_PROFILE_INFO,
 } from './types'
 import { BASE_URL } from '../constants'
 
@@ -82,11 +83,41 @@ export const fetchFeed = () => async (dispatch, getState) => {
         })
         console.log(response.data)
 
+        let postsObj = {}
+        response.data.forEach(post => {
+            postsObj[post._id] = { ...post }
+        })
+
         /*
             dispatch feed data to feed reducer
-        
         */
+        dispatch({
+            type: FETCH_FEED,
+            payload: postsObj,
+        })
     } catch (e) {
+        console.log('Feed Fetching problem: ', e)
+        console.log('problem')
+    }
+}
+
+export const fetchProfileInfo = username => async (dispatch, getState) => {
+    try {
+        const { Token } = getState().auth
+        const response = await axios.post(BASE_URL + `/profile/${username}`, {
+            token: Token,
+        })
+        console.log(response.data)
+
+        /*
+            dispatch feed data to feed reducer
+        */
+        dispatch({
+            type: FETCH_PROFILE_INFO,
+            payload: response.data,
+        })
+    } catch (e) {
+        console.log('Profile info Fetching problem: ', e)
         console.log('problem')
     }
 }

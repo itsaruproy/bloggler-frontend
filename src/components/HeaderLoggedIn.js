@@ -12,7 +12,7 @@ const HeaderLoggedIn = props => {
     }
     return (
         <HStack spacing={'2'} alignItems={'center'}>
-            <ChakraLink as={Link} to={'/profile/arup'}>
+            <ChakraLink as={Link} to={`/profile/${props.Username}`}>
                 <Icon w={'5'} h={'5'} as={AiOutlineUser} />
             </ChakraLink>
             <ChakraLink
@@ -32,4 +32,7 @@ const HeaderLoggedIn = props => {
     )
 }
 
-export default connect(null, { signOut })(HeaderLoggedIn)
+const mapStateToProps = state => {
+    return { Token: state.auth.Token, Username: state.auth.Username }
+}
+export default connect(mapStateToProps, { signOut })(HeaderLoggedIn)

@@ -7,7 +7,7 @@ import {
     FormHelperText,
     Input,
     Button,
-    Text
+    Text,
 } from '@chakra-ui/react'
 
 import { connect } from 'react-redux'
@@ -55,7 +55,12 @@ const SignUp = props => {
                     placeholder={'Create a new password'}
                 />
                 {/* <FormHelperText>Password must be alphanumeric</FormHelperText> */}
-                <Button onClick={signUpHandler} w={'full'} colorScheme={'teal'}>
+                <Button
+                    mt={'1rem'}
+                    onClick={signUpHandler}
+                    w={'full'}
+                    colorScheme={'teal'}
+                >
                     Sign Up
                 </Button>
             </Box>
