@@ -1,4 +1,4 @@
-import { FETCH_POSTS } from '../actions/types'
+import { FETCH_FOLLOWERS } from '../actions/types'
 
 const INITIAL_STATE = []
 
@@ -12,7 +12,7 @@ const createNewState = action => {
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case FETCH_POSTS:
+        case FETCH_FOLLOWERS:
             return createNewState(action)
         default:
             return state

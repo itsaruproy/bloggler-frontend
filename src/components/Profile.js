@@ -71,12 +71,6 @@ const Profile = props => {
                         </Tab>
                     </TabList>
                 </Tabs>
-
-                {/* Here we'll return a div with the necessary contents using route tags not using tabpanels*/}
-
-                <Box>
-                    <Text>New Post</Text>
-                </Box>
             </Box>
             <Router history={history}>
                 <Route

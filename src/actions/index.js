@@ -9,6 +9,8 @@ import {
     DELETE_TARGET,
     FETCH_PROFILE_INFO,
     FETCH_POSTS,
+    FETCH_FOLLOWERS,
+    FETCH_FOLLOWINGS,
 } from './types'
 import { BASE_URL } from '../constants'
 
@@ -142,6 +144,47 @@ export const fetchProfilePosts = username => async (dispatch, getState) => {
         console.log('problem')
     }
 }
+
+export const fetchProfileFollowers = username => async (dispatch, getState) => {
+    try {
+        const response = await axios.get(
+            BASE_URL + `/profile/${username}/followers`
+        )
+        console.log(response.data)
+
+        /*
+            dispatch feed data to feed reducer
+        */
+        dispatch({
+            type: FETCH_FOLLOWERS,
+            payload: response.data,
+        })
+    } catch (e) {
+        console.log('Profile followers Fetching problem: ', e)
+        console.log('problem')
+    }
+}
+
+export const fetchProfileFollowings =
+    username => async (dispatch, getState) => {
+        try {
+            const response = await axios.get(
+                BASE_URL + `/profile/${username}/following`
+            )
+            console.log(response.data)
+
+            /*
+            dispatch feed data to feed reducer
+        */
+            dispatch({
+                type: FETCH_FOLLOWINGS,
+                payload: response.data,
+            })
+        } catch (e) {
+            console.log('Profile follwoings Fetching problem: ', e)
+            console.log('problem')
+        }
+    }
 
 export const addNewTarget =
     (targetName, folderID) => async (dispatch, getState) => {

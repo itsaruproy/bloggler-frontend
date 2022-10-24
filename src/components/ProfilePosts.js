@@ -9,7 +9,14 @@ const ProfilePosts = props => {
     useEffect(() => {
         fetchProfilePosts(username)
     }, [fetchProfilePosts, username])
-    return <div>ProfilePosts</div>
+
+    return (
+        <>
+            {props.ProfilePosts.map(post => {
+                return <div>This is a post</div>
+            })}
+        </>
+    )
 }
 
 const mapStateToProps = state => {

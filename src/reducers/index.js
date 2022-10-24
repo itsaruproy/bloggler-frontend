@@ -5,10 +5,14 @@ import listReducer from './listReducer'
 import feedReducer from './feedReducer'
 import profileInfoReducer from './profileInfoReducer'
 import postsReducer from './postsReducer'
+import followersReducer from './followersReducer'
+import followingReducer from './followingReducer'
 
 export default combineReducers({
     auth: authReducer,
     feed: feedReducer,
     profileInfo: profileInfoReducer,
     profilePosts: postsReducer,
+    profileFollowers: followersReducer,
+    profileFollowings: followingReducer,
 })
