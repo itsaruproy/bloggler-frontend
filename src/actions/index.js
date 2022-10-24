@@ -12,8 +12,29 @@ import {
     FETCH_FOLLOWERS,
     FETCH_FOLLOWINGS,
     TAB_CHANGE,
+    CREATE_POST,
 } from './types'
 import { BASE_URL } from '../constants'
+
+export const createPost = (title, body) => async (dispatch, getState) => {
+    const { Token } = getState().auth
+    try {
+        const response = await axios.post(BASE_URL + '/create-post', {
+            title,
+            body,
+            token: Token,
+        })
+        dispatch({
+            type: CREATE_POST,
+            payload: null,
+        })
+        history.push(`/post/${response.data}`)
+        console.log(`New post was created. ${response.data}`)
+        return
+    } catch (e) {
+        console.log('Create Post problem', e)
+    }
+}
 
 export const tabChange = newIndex => async (dispatch, getState) => {
     const { index } = getState().tabIndex
@@ -65,6 +86,8 @@ export const signIn = (username, password) => async (dispatch, getState) => {
             // navigate("/")
             console.log(response.data)
             // console.log("logged in");
+            localStorage.setItem('bloggler-token', response.data.token)
+            localStorage.setItem('bloggler-username', response.data.username)
             dispatch({
                 type: SIGN_IN,
                 payload: {

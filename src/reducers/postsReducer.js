@@ -1,4 +1,4 @@
-import { FETCH_POSTS } from '../actions/types'
+import { FETCH_POSTS, CREATE_POST } from '../actions/types'
 
 const INITIAL_STATE = []
 
@@ -14,6 +14,8 @@ export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case FETCH_POSTS:
             return createNewState(action)
+        case CREATE_POST:
+            return state
         default:
             return state
     }
