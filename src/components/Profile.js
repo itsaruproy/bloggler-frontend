@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react'
+import { Route, Router, Switch } from 'react-router-dom'
+import history from '../history'
 import {
     Box,
     Button,
@@ -10,12 +12,16 @@ import {
     TabPanels,
     Tab,
     TabPanel,
-    Link,
+    Link as ChakraLink,
 } from '@chakra-ui/react'
 import { AiOutlineUser } from 'react-icons/ai'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchProfileInfo } from '../actions'
+import ViewPost from './ViewPost'
+import ProfilePosts from './ProfilePosts'
+import ProfileFollowers from './ProfileFollowers'
+import ProfileFollowing from './ProfileFollowing'
 
 const Profile = props => {
     const username = props.match.params.username
@@ -31,7 +37,7 @@ const Profile = props => {
         <Flex alignItems={'center'} mt={'20'} flexDirection={'column'}>
             <Flex alignItems={'center'} gap={'5'}>
                 <Icon as={AiOutlineUser} />
-                <Text>Arup Roy</Text>
+                <Text>{props.ProfileInfo.profileUsername}</Text>
                 <Button size={'sm'} colorScheme={'teal'}>
                     Follow
                 </Button>
@@ -39,9 +45,30 @@ const Profile = props => {
             <Box mt={'1rem'}>
                 <Tabs size={'lg'}>
                     <TabList>
-                        <Tab>Posts</Tab>
-                        <Tab>Followers</Tab>
-                        <Tab>Following</Tab>
+                        <Tab>
+                            <ChakraLink
+                                as={NavLink}
+                                to={`/profile/${username}`}
+                            >
+                                Posts
+                            </ChakraLink>
+                        </Tab>
+                        <Tab>
+                            <ChakraLink
+                                as={NavLink}
+                                to={`/profile/${username}/followers`}
+                            >
+                                Followers
+                            </ChakraLink>
+                        </Tab>
+                        <Tab>
+                            <ChakraLink
+                                as={NavLink}
+                                to={`/profile/${username}/following`}
+                            >
+                                Following
+                            </ChakraLink>
+                        </Tab>
                     </TabList>
                 </Tabs>
 
@@ -51,6 +78,23 @@ const Profile = props => {
                     <Text>New Post</Text>
                 </Box>
             </Box>
+            <Router history={history}>
+                <Route
+                    exact
+                    path="/profile/:username"
+                    component={ProfilePosts}
+                />
+                <Route
+                    exact
+                    path="/profile/:username/followers"
+                    component={ProfileFollowers}
+                />
+                <Route
+                    exact
+                    path="/profile/:username/following"
+                    component={ProfileFollowing}
+                />
+            </Router>
         </Flex>
     )
 }
