@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { fetchProfilePosts } from '../actions'
+import { fetchProfilePosts, tabChange } from '../actions'
 
 const ProfilePosts = props => {
     const username = props.match.params.username
-    const { fetchProfilePosts } = props
+    const { fetchProfilePosts, tabChange } = props
+
+    useEffect(() => {
+        tabChange(0)
+    }, [tabChange])
 
     useEffect(() => {
         fetchProfilePosts(username)
@@ -22,4 +26,6 @@ const ProfilePosts = props => {
 const mapStateToProps = state => {
     return { ProfilePosts: state.profilePosts }
 }
-export default connect(mapStateToProps, { fetchProfilePosts })(ProfilePosts)
+export default connect(mapStateToProps, { fetchProfilePosts, tabChange })(
+    ProfilePosts
+)

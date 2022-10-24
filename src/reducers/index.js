@@ -7,6 +7,7 @@ import profileInfoReducer from './profileInfoReducer'
 import postsReducer from './postsReducer'
 import followersReducer from './followersReducer'
 import followingReducer from './followingReducer'
+import tabIndexReducer from './tabIndexReducer'
 
 export default combineReducers({
     auth: authReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
     profilePosts: postsReducer,
     profileFollowers: followersReducer,
     profileFollowings: followingReducer,
+    tabIndex: tabIndexReducer,
 })

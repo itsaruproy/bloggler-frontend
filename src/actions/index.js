@@ -11,8 +11,22 @@ import {
     FETCH_POSTS,
     FETCH_FOLLOWERS,
     FETCH_FOLLOWINGS,
+    TAB_CHANGE,
 } from './types'
 import { BASE_URL } from '../constants'
+
+export const tabChange = newIndex => async (dispatch, getState) => {
+    const { index } = getState().tabIndex
+    console.log('Index from tabChange function', index)
+    if (index != newIndex) {
+        dispatch({
+            type: TAB_CHANGE,
+            payload: {
+                index: newIndex,
+            },
+        })
+    }
+}
 
 export const signUp =
     (username, email, password) => async (dispatch, getState) => {

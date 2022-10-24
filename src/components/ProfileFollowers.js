@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { fetchProfileFollowers } from '../actions'
+import { fetchProfileFollowers, tabChange } from '../actions'
 
 const ProfileFollowers = props => {
     const username = props.match.params.username
-    const { fetchProfileFollowers } = props
+    const { fetchProfileFollowers, tabChange } = props
+
+    useEffect(() => {
+        tabChange(1)
+    }, [tabChange])
 
     useEffect(() => {
         fetchProfileFollowers(username)
@@ -21,6 +25,6 @@ const ProfileFollowers = props => {
 const mapStateToProps = state => {
     return { ProfileFollowers: state.profileFollowers }
 }
-export default connect(mapStateToProps, { fetchProfileFollowers })(
+export default connect(mapStateToProps, { fetchProfileFollowers, tabChange })(
     ProfileFollowers
 )

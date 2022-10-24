@@ -28,6 +28,8 @@ const Profile = props => {
     const { fetchProfileInfo } = props
     console.log('Username from URL', username)
 
+    console.log('Tab index', props.TabIndex)
+
     useEffect(() => {
         fetchProfileInfo(username)
         console.log('useEffect ran inside the fetch user data')
@@ -43,7 +45,7 @@ const Profile = props => {
                 </Button>
             </Flex>
             <Box mt={'1rem'}>
-                <Tabs size={'lg'}>
+                <Tabs index={props.TabIndex} size={'lg'}>
                     <TabList>
                         <Tab>
                             <ChakraLink
@@ -94,6 +96,6 @@ const Profile = props => {
 }
 
 const mapStateToProps = state => {
-    return { ProfileInfo: state.profileInfo }
+    return { ProfileInfo: state.profileInfo, TabIndex: state.tabIndex.index }
 }
 export default connect(mapStateToProps, { fetchProfileInfo })(Profile)
