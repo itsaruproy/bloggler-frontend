@@ -8,6 +8,7 @@ import {
     ADD_NEW_TARGET,
     DELETE_TARGET,
     FETCH_PROFILE_INFO,
+    FETCH_POSTS,
 } from './types'
 import { BASE_URL } from '../constants'
 
@@ -118,6 +119,26 @@ export const fetchProfileInfo = username => async (dispatch, getState) => {
         })
     } catch (e) {
         console.log('Profile info Fetching problem: ', e)
+        console.log('problem')
+    }
+}
+
+export const fetchProfilePosts = username => async (dispatch, getState) => {
+    try {
+        const response = await axios.get(
+            BASE_URL + `/profile/${username}/posts`
+        )
+        console.log(response.data)
+
+        /*
+            dispatch feed data to feed reducer
+        */
+        dispatch({
+            type: FETCH_POSTS,
+            payload: response.data,
+        })
+    } catch (e) {
+        console.log('Profile posts Fetching problem: ', e)
         console.log('problem')
     }
 }
