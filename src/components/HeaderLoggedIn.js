@@ -1,5 +1,11 @@
 import React from 'react'
-import { Button, HStack, Icon, Link as ChakraLink } from '@chakra-ui/react'
+import {
+    Button,
+    HStack,
+    Icon,
+    Link as ChakraLink,
+    Avatar,
+} from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { AiOutlineUser } from 'react-icons/ai'
 
@@ -13,7 +19,7 @@ const HeaderLoggedIn = props => {
     return (
         <HStack spacing={'2'} alignItems={'center'}>
             <ChakraLink as={Link} to={`/profile/${props.Username}`}>
-                <Icon w={'5'} h={'5'} as={AiOutlineUser} />
+                <Avatar w={'8'} h={'8'} icon={<AiOutlineUser />} />
             </ChakraLink>
             <ChakraLink
                 style={{ textDecoration: 'none' }}
