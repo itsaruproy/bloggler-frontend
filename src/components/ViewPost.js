@@ -6,14 +6,52 @@ import {
     HStack,
     Icon,
     Link as ChakraLink,
+    Button,
 } from '@chakra-ui/react'
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    useDisclosure,
+} from '@chakra-ui/react'
+
 import { AiOutlineUser } from 'react-icons/ai'
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
 import { Link } from 'react-router-dom'
 import { fetchSinglePost } from '../actions'
 import { connect } from 'react-redux'
 
+function DeleteModal(props) {
+    const { isOpen, onOpen, onClose } = props
+    return (
+        <>
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Are you sure you want to delete?</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Text>Click Yes to delete</Text>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button colorScheme="blue" mr={3} onClick={onClose}>
+                            Close
+                        </Button>
+                        <Button colorScheme={'red'}>Delete</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+        </>
+    )
+}
+
 const ViewPost = props => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const postid = props.match.params.id
     const { fetchSinglePost } = props
     const { PostInfo } = props
@@ -47,7 +85,12 @@ const ViewPost = props => {
                                 <EditIcon />
                             </ChakraLink>
                             <ChakraLink>
-                                <DeleteIcon />
+                                <DeleteIcon onClick={onOpen} />
+                                <DeleteModal
+                                    isOpen={isOpen}
+                                    onOpe={onOpen}
+                                    onClose={onClose}
+                                />
                             </ChakraLink>
                         </HStack>
                     </HStack>
