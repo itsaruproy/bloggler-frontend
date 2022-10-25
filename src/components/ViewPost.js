@@ -1,35 +1,29 @@
 import React, { useState, useEffect } from 'react'
-import { Flex, Text, Heading, HStack, Icon } from '@chakra-ui/react'
+import {
+    Flex,
+    Text,
+    Heading,
+    HStack,
+    Icon,
+    Link as ChakraLink,
+} from '@chakra-ui/react'
 import { AiOutlineUser } from 'react-icons/ai'
-import axios from 'axios'
-import { BASE_URL } from '../constants'
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
+import { Link } from 'react-router-dom'
+import { fetchSinglePost } from '../actions'
+import { connect } from 'react-redux'
 
 const ViewPost = props => {
     const postid = props.match.params.id
-
-    const [post, setPost] = useState()
-
+    const { fetchSinglePost } = props
+    const { PostInfo } = props
+    console.log('From ViewPost : ', PostInfo)
     useEffect(() => {
-        const ourRequest = axios.CancelToken.source()
-        async function fetchPost() {
-            try {
-                const response = await axios.get(BASE_URL + `/post/${postid}`, {
-                    cancelToken: ourRequest.token,
-                })
-                console.log(response.data)
-                setPost(response.data)
-            } catch (e) {
-                console.log(e)
-            }
-        }
-        fetchPost()
-        return () => {
-            ourRequest.cancel()
-        }
-    }, [postid])
+        fetchSinglePost(postid)
+    }, [postid, fetchSinglePost])
 
     const renderPost = () => {
-        if (post) {
+        if (Object.keys(PostInfo).length !== 0) {
             return (
                 <Flex
                     flexDirection={'column'}
@@ -38,13 +32,27 @@ const ViewPost = props => {
                     mt={'5'}
                     gap={'1rem'}
                 >
-                    <Heading>{post.title}</Heading>
-                    <HStack>
-                        <Icon as={AiOutlineUser} />
-                        <Text>{post.author.username}</Text>
-                        <Text>02/10/2021</Text>
+                    <Heading>{PostInfo.title}</Heading>
+                    <HStack justifyContent={'space-between'}>
+                        <HStack>
+                            <Icon as={AiOutlineUser} />
+                            <Text>{PostInfo.author.username}</Text>
+                            <Text>02/10/2021</Text>
+                        </HStack>
+                        <HStack spacing={'.5rem'}>
+                            <ChakraLink
+                                as={Link}
+                                to={`/post/${PostInfo._id}/edit`}
+                            >
+                                <EditIcon />
+                            </ChakraLink>
+                            <ChakraLink>
+                                <DeleteIcon />
+                            </ChakraLink>
+                        </HStack>
                     </HStack>
-                    <Text>{post.body}</Text>
+
+                    <Text>{PostInfo.body}</Text>
                 </Flex>
             )
         }
@@ -54,4 +62,8 @@ const ViewPost = props => {
     return <>{renderPost()}</>
 }
 
-export default ViewPost
+const mapStateToProps = state => {
+    return { PostInfo: state.singlePostDetails }
+}
+
+export default connect(mapStateToProps, { fetchSinglePost })(ViewPost)

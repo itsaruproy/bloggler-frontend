@@ -13,8 +13,22 @@ import {
     FETCH_FOLLOWINGS,
     TAB_CHANGE,
     CREATE_POST,
+    FETCH_SINGLE_POST,
 } from './types'
 import { BASE_URL } from '../constants'
+
+export const fetchSinglePost = postid => async (dispatch, getState) => {
+    try {
+        const response = await axios.get(BASE_URL + `/post/${postid}`)
+        console.log('From actions', response.data)
+        dispatch({
+            type: FETCH_SINGLE_POST,
+            payload: response.data,
+        })
+    } catch (e) {
+        console.log('Single post fetching problem', e)
+    }
+}
 
 export const createPost = (title, body) => async (dispatch, getState) => {
     const { Token } = getState().auth
@@ -39,7 +53,7 @@ export const createPost = (title, body) => async (dispatch, getState) => {
 export const tabChange = newIndex => async (dispatch, getState) => {
     const { index } = getState().tabIndex
     console.log('Index from tabChange function', index)
-    if (index != newIndex) {
+    if (index !== newIndex) {
         dispatch({
             type: TAB_CHANGE,
             payload: {

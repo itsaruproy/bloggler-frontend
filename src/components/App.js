@@ -9,6 +9,7 @@ import Profile from './Profile'
 import SignUp from './SignUp'
 import ViewPost from './ViewPost'
 import HomeController from './HomeController'
+import EditPost from './EditPost'
 
 import history from '../history'
 
@@ -31,7 +32,7 @@ const App = () => {
                         />
                         <Route exact path="/" component={HomeController} />
                         <Route exact path="/post/:id" component={ViewPost} />
-                        {/* <Route path="/post/:id/edit" element={<EditPost />} /> */}
+                        <Route path="/post/:id/edit" component={EditPost} />
                         <Route
                             exact
                             path="/create-post"
