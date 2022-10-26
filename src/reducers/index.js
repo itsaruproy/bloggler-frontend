@@ -9,6 +9,7 @@ import followersReducer from './followersReducer'
 import followingReducer from './followingReducer'
 import tabIndexReducer from './tabIndexReducer'
 import singlePostReducer from './singlePostReducer'
+import signupReducer from './signupReducer'
 
 export default combineReducers({
     auth: authReducer,
@@ -19,4 +20,5 @@ export default combineReducers({
     profileFollowings: followingReducer,
     tabIndex: tabIndexReducer,
     singlePostDetails: singlePostReducer,
+    signUpValidation: signupReducer,
 })

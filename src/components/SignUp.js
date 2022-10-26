@@ -15,7 +15,7 @@ import { signUp } from '../actions'
 import { checkUsername, checkEmail } from '../actions/signupForm'
 
 const SignUp = props => {
-    const { checkUsername, checkEmail } = props
+    const { checkUsername, checkEmail, SignUpValidation } = props
     const dispatch = useDispatch()
 
     const [username, setUsername] = useState('')
@@ -58,7 +58,9 @@ const SignUp = props => {
     }, [finalemail, checkEmail])
 
     const signUpHandler = () => {
-        props.signUp(username, email, password)
+        if (SignUpValidation.canSubmit) {
+            props.signUp(finalusername, finalemail, password)
+        }
     }
 
     return (
@@ -68,7 +70,7 @@ const SignUp = props => {
                 <Input
                     key={'1'}
                     value={username}
-                    onChange={e => setUsername(e.target.value)}
+                    onChange={e => setUsername(e.target.value.toLowerCase())}
                     borderColor={'teal'}
                     type="text"
                     placeholder={'Choose your username'}
@@ -78,7 +80,7 @@ const SignUp = props => {
                 <Input
                     key={'2'}
                     value={email}
-                    onChange={e => setEmail(e.target.value)}
+                    onChange={e => setEmail(e.target.value.toLowerCase())}
                     borderColor={'teal'}
                     type="email"
                     placeholder={'jhon@doe.com'}
@@ -107,4 +109,10 @@ const SignUp = props => {
     )
 }
 
-export default connect(null, { signUp, checkEmail, checkUsername })(SignUp)
+const mapStateToProps = state => {
+    return { SignUpValidation: state.signUpValidation }
+}
+
+export default connect(mapStateToProps, { signUp, checkEmail, checkUsername })(
+    SignUp
+)
