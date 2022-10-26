@@ -22,11 +22,11 @@ import {
 import { AiOutlineUser } from 'react-icons/ai'
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
 import { Link } from 'react-router-dom'
-import { fetchSinglePost } from '../actions'
+import { fetchSinglePost, deleteSinglePost } from '../actions'
 import { connect } from 'react-redux'
 
 function DeleteModal(props) {
-    const { isOpen, onOpen, onClose } = props
+    const { isOpen, onOpen, onClose, deleteHandler } = props
     return (
         <>
             <Modal isOpen={isOpen} onClose={onClose}>
@@ -42,7 +42,9 @@ function DeleteModal(props) {
                         <Button colorScheme="blue" mr={3} onClick={onClose}>
                             Cancel
                         </Button>
-                        <Button colorScheme={'red'}>Delete</Button>
+                        <Button onClick={deleteHandler} colorScheme={'red'}>
+                            Delete
+                        </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
@@ -53,7 +55,7 @@ function DeleteModal(props) {
 const ViewPost = props => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const postid = props.match.params.id
-    const { fetchSinglePost } = props
+    const { fetchSinglePost, deleteSinglePost } = props
     const { PostInfo } = props
     console.log('From ViewPost : ', PostInfo)
     useEffect(() => {
@@ -91,6 +93,13 @@ const ViewPost = props => {
                                         isOpen={isOpen}
                                         onOpe={onOpen}
                                         onClose={onClose}
+                                        deleteHandler={() => {
+                                            deleteSinglePost(postid).then(
+                                                () => {
+                                                    onClose()
+                                                }
+                                            )
+                                        }}
                                     />
                                 </ChakraLink>
                             </HStack>
@@ -114,4 +123,6 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { fetchSinglePost })(ViewPost)
+export default connect(mapStateToProps, { fetchSinglePost, deleteSinglePost })(
+    ViewPost
+)

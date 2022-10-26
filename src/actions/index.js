@@ -14,6 +14,7 @@ import {
     TAB_CHANGE,
     CREATE_POST,
     FETCH_SINGLE_POST,
+    DELETE_SINGLE_POST,
 } from './types'
 import { BASE_URL } from '../constants'
 
@@ -27,6 +28,27 @@ export const fetchSinglePost = postid => async (dispatch, getState) => {
         })
     } catch (e) {
         console.log('Single post fetching problem', e)
+    }
+}
+
+export const deleteSinglePost = postid => async (dispatch, getState) => {
+    const { Token, Username } = getState().auth
+    try {
+        const response = await axios.delete(BASE_URL + `/post/${postid}`, {
+            data: { token: Token },
+        })
+
+        console.log('Delete Post', response)
+        if (response.status === 200) {
+            //1.display a flash message
+            dispatch({
+                type: DELETE_SINGLE_POST,
+                payload: null,
+            })
+            history.push(`/profile/${Username}`)
+        }
+    } catch (e) {
+        console.log('oops')
     }
 }
 
