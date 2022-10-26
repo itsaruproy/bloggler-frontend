@@ -73,7 +73,7 @@ const Profile = props => {
             <Flex alignItems={'center'} gap={'5'}>
                 <Icon as={AiOutlineUser} />
                 <Text>{props.ProfileInfo.profileUsername}</Text>
-                {displayFollowButton()}
+                {props.LoggedIn && displayFollowButton()}
             </Flex>
             <Box mt={'1rem'}>
                 <Tabs index={props.TabIndex} size={'lg'}>
@@ -131,6 +131,7 @@ const mapStateToProps = state => {
         ProfileInfo: state.profileInfo,
         TabIndex: state.tabIndex.index,
         MyUsername: state.auth.Username,
+        LoggedIn: state.auth.LoggedIn,
     }
 }
 export default connect(mapStateToProps, {
