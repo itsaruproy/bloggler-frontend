@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Flex, Input, Textarea, Text, Button, useToast } from '@chakra-ui/react'
 import { connect } from 'react-redux'
-import { fetchSinglePost } from '../actions'
+import { fetchSinglePost, editSinglePost } from '../actions'
 
 const EditPost = props => {
     const postid = props.match.params.id
-    const { fetchSinglePost } = props
+    const { fetchSinglePost, editSinglePost } = props
     const { PostInfo } = props
 
     const toast = useToast()
@@ -32,6 +32,14 @@ const EditPost = props => {
                 isClosable: true,
             })
         })*/
+        editSinglePost(postid, title, body).then(() => {
+            toast({
+                title: 'Post edited.',
+                status: 'success',
+                duration: 4000,
+                isClosable: true,
+            })
+        })
         console.log('Editing post')
     }
 
@@ -63,4 +71,6 @@ const mapStateToProps = state => {
     return { PostInfo: state.singlePostDetails }
 }
 
-export default connect(mapStateToProps, { fetchSinglePost })(EditPost)
+export default connect(mapStateToProps, { fetchSinglePost, editSinglePost })(
+    EditPost
+)
