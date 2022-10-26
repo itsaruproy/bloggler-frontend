@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Box,
     FormControl,
@@ -10,13 +10,52 @@ import {
     Text,
 } from '@chakra-ui/react'
 
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import { signUp } from '../actions'
+import { checkUsername, checkEmail } from '../actions/signupForm'
 
 const SignUp = props => {
+    const { checkUsername, checkEmail } = props
+    const dispatch = useDispatch()
+
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const [finalusername, setFinalusername] = useState()
+    const [finalemail, setFinalemail] = useState()
+
+    useEffect(() => {
+        const usernameId = setTimeout(() => {
+            setFinalusername(username)
+        }, 1000)
+
+        return () => clearTimeout(usernameId)
+    }, [username])
+
+    useEffect(() => {
+        const emailId = setTimeout(() => {
+            setFinalemail(email)
+        }, 1000)
+
+        return () => clearTimeout(emailId)
+    }, [email])
+
+    useEffect(() => {
+        if (finalusername) {
+            // make network request to check if username already exist
+            console.log('Checking if usernmae exists')
+            checkUsername(finalusername)
+        }
+    }, [finalusername, checkUsername])
+
+    useEffect(() => {
+        if (finalemail) {
+            // make network request to check if email already exist
+            console.log('Checking if email exists')
+            checkEmail(finalemail)
+        }
+    }, [finalemail, checkEmail])
 
     const signUpHandler = () => {
         props.signUp(username, email, password)
@@ -68,4 +107,4 @@ const SignUp = props => {
     )
 }
 
-export default connect(null, { signUp })(SignUp)
+export default connect(null, { signUp, checkEmail, checkUsername })(SignUp)
