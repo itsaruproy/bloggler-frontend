@@ -17,7 +17,7 @@ import {
 import { AiOutlineUser } from 'react-icons/ai'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchProfileInfo } from '../actions'
+import { fetchProfileInfo, followUser, unfollowUser } from '../actions'
 import ViewPost from './ViewPost'
 import ProfilePosts from './ProfilePosts'
 import ProfileFollowers from './ProfileFollowers'
@@ -25,7 +25,7 @@ import ProfileFollowing from './ProfileFollowing'
 
 const Profile = props => {
     const username = props.match.params.username
-    const { fetchProfileInfo } = props
+    const { fetchProfileInfo, followUser, unfollowUser } = props
     console.log('Username from URL', username)
 
     console.log('Tab index', props.TabIndex)
@@ -35,14 +35,45 @@ const Profile = props => {
         console.log('useEffect ran inside the fetch user data')
     }, [username, fetchProfileInfo])
 
+    const followUnfollowHandler = () => {
+        if (props.ProfileInfo.isFollowing === true) {
+            unfollowUser(username)
+        } else {
+            followUser(username)
+        }
+    }
+
+    const displayFollowButton = () => {
+        if (props.MyUsername === props.ProfileInfo.profileUsername) return null
+        if (props.ProfileInfo.isFollowing === true) {
+            return (
+                <Button
+                    onClick={followUnfollowHandler}
+                    size={'sm'}
+                    colorScheme={'teal'}
+                >
+                    Unfollow
+                </Button>
+            )
+        } else {
+            return (
+                <Button
+                    onClick={followUnfollowHandler}
+                    size={'sm'}
+                    colorScheme={'teal'}
+                >
+                    Follow
+                </Button>
+            )
+        }
+    }
+
     return (
         <Flex alignItems={'center'} mt={'20'} flexDirection={'column'}>
             <Flex alignItems={'center'} gap={'5'}>
                 <Icon as={AiOutlineUser} />
                 <Text>{props.ProfileInfo.profileUsername}</Text>
-                <Button size={'sm'} colorScheme={'teal'}>
-                    Follow
-                </Button>
+                {displayFollowButton()}
             </Flex>
             <Box mt={'1rem'}>
                 <Tabs index={props.TabIndex} size={'lg'}>
@@ -96,6 +127,14 @@ const Profile = props => {
 }
 
 const mapStateToProps = state => {
-    return { ProfileInfo: state.profileInfo, TabIndex: state.tabIndex.index }
+    return {
+        ProfileInfo: state.profileInfo,
+        TabIndex: state.tabIndex.index,
+        MyUsername: state.auth.Username,
+    }
 }
-export default connect(mapStateToProps, { fetchProfileInfo })(Profile)
+export default connect(mapStateToProps, {
+    fetchProfileInfo,
+    followUser,
+    unfollowUser,
+})(Profile)

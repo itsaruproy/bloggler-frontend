@@ -16,8 +16,47 @@ import {
     FETCH_SINGLE_POST,
     DELETE_SINGLE_POST,
     EDIT_SINGLE_POST,
+    START_FOLLOWING,
+    STOP_FOLLOWING,
 } from './types'
 import { BASE_URL } from '../constants'
+
+export const followUser = username => async (dispatch, getState) => {
+    const { Token } = getState().auth
+    try {
+        const response = await axios.post(BASE_URL + `/addFollow/${username}`, {
+            token: Token,
+        })
+        dispatch({
+            type: START_FOLLOWING,
+            payload: {
+                isFollowing: true,
+            },
+        })
+    } catch (e) {
+        console.log('problem following', e)
+    }
+}
+
+export const unfollowUser = username => async (dispatch, getState) => {
+    const { Token } = getState().auth
+    try {
+        const response = await axios.post(
+            BASE_URL + `/removeFollow/${username}`,
+            {
+                token: Token,
+            }
+        )
+        dispatch({
+            type: STOP_FOLLOWING,
+            payload: {
+                isFollowing: false,
+            },
+        })
+    } catch (e) {
+        console.log('problem following', e)
+    }
+}
 
 export const fetchSinglePost = postid => async (dispatch, getState) => {
     try {
