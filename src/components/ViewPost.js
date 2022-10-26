@@ -32,15 +32,15 @@ function DeleteModal(props) {
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Are you sure you want to delete?</ModalHeader>
+                    <ModalHeader>Delete Post</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <Text>Click Yes to delete</Text>
+                        <Text>Are you sure you want to delete this post?</Text>
                     </ModalBody>
 
                     <ModalFooter>
                         <Button colorScheme="blue" mr={3} onClick={onClose}>
-                            Close
+                            Cancel
                         </Button>
                         <Button colorScheme={'red'}>Delete</Button>
                     </ModalFooter>
@@ -77,22 +77,24 @@ const ViewPost = props => {
                             <Text>{PostInfo.author.username}</Text>
                             <Text>02/10/2021</Text>
                         </HStack>
-                        <HStack spacing={'.5rem'}>
-                            <ChakraLink
-                                as={Link}
-                                to={`/post/${PostInfo._id}/edit`}
-                            >
-                                <EditIcon />
-                            </ChakraLink>
-                            <ChakraLink>
-                                <DeleteIcon onClick={onOpen} />
-                                <DeleteModal
-                                    isOpen={isOpen}
-                                    onOpe={onOpen}
-                                    onClose={onClose}
-                                />
-                            </ChakraLink>
-                        </HStack>
+                        {props.PostInfo.author.username === props.MyUsername ? (
+                            <HStack spacing={'.5rem'}>
+                                <ChakraLink
+                                    as={Link}
+                                    to={`/post/${PostInfo._id}/edit`}
+                                >
+                                    <EditIcon />
+                                </ChakraLink>
+                                <ChakraLink>
+                                    <DeleteIcon onClick={onOpen} />
+                                    <DeleteModal
+                                        isOpen={isOpen}
+                                        onOpe={onOpen}
+                                        onClose={onClose}
+                                    />
+                                </ChakraLink>
+                            </HStack>
+                        ) : null}
                     </HStack>
 
                     <Text>{PostInfo.body}</Text>
@@ -106,7 +108,10 @@ const ViewPost = props => {
 }
 
 const mapStateToProps = state => {
-    return { PostInfo: state.singlePostDetails }
+    return {
+        PostInfo: state.singlePostDetails,
+        MyUsername: state.auth.Username,
+    }
 }
 
 export default connect(mapStateToProps, { fetchSinglePost })(ViewPost)
