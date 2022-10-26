@@ -163,13 +163,17 @@ export const signUp =
                 { cancelToken: ourRequest.token }
             )
             console.log(response.data)
-            // appDispatch({ type: 'login', data: response.data })
-            // // appDispatch({ type: "flashMessage", value: "Congrats! Welcome to your new account." })
-            // appDispatch({
-            //     type: 'flashMessage',
-            //     value: 'You have Successfully logged in',
-            //     isPos: 'success',
-            // })
+            localStorage.setItem('bloggler-token', response.data.token)
+            localStorage.setItem('bloggler-username', response.data.username)
+            dispatch({
+                type: SIGN_UP,
+                payload: {
+                    Token: response.data.token,
+                    Username: response.data.username,
+                    LoggedIn: true,
+                },
+            })
+            history.push('/')
         } catch (e) {
             console.log('There was a problem or the request was cancelled.')
         }

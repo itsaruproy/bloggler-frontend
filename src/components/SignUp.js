@@ -58,7 +58,8 @@ const SignUp = props => {
     }, [finalemail, checkEmail])
 
     const signUpHandler = () => {
-        if (SignUpValidation.canSubmit) {
+        let { usernameExists, emailExists } = SignUpValidation
+        if (!usernameExists && !emailExists && password) {
             props.signUp(finalusername, finalemail, password)
         }
     }

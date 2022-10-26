@@ -1,4 +1,4 @@
-import { SIGN_IN, SIGN_OUT } from '../actions/types'
+import { SIGN_IN, SIGN_OUT, SIGN_UP } from '../actions/types'
 
 const INITIAL_STATE = {
     Token: localStorage.getItem('bloggler-token'),
@@ -19,6 +19,10 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 Token: action.payload.token,
                 Username: action.payload.username,
+            }
+        case SIGN_UP:
+            return {
+                ...action.payload,
             }
         default:
             return state

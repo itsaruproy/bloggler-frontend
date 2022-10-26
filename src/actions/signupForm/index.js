@@ -9,6 +9,10 @@ export const checkUsername = username => async (dispatch, getState) => {
             username: username,
         })
         console.log('Check username Action', response.data)
+        dispatch({
+            type: USERNAME_EXISTS,
+            payload: response.data,
+        })
     } catch (e) {
         console.log('problem')
     }
@@ -20,6 +24,10 @@ export const checkEmail = email => async (dispatch, getState) => {
             email: email,
         })
         console.log('Check email Action', response.data)
+        dispatch({
+            type: EMAIL_EXISTS,
+            payload: response.data,
+        })
     } catch (e) {
         console.log('problem')
     }
