@@ -5,8 +5,6 @@ import {
     SIGN_IN,
     SIGN_OUT,
     FETCH_FEED,
-    ADD_NEW_TARGET,
-    DELETE_TARGET,
     FETCH_PROFILE_INFO,
     FETCH_POSTS,
     FETCH_FOLLOWERS,
@@ -207,16 +205,18 @@ export const signIn = (username, password) => async (dispatch, getState) => {
     }
 }
 
-export const signOut = () => {
+export const signOut = () => async (dispatch, getState) => {
     localStorage.removeItem('bloggler-token')
     localStorage.removeItem('bloggler-username')
-    return {
+    dispatch({
         type: SIGN_OUT,
         payload: {
             token: null,
             username: null,
         },
-    }
+    })
+
+    history.push('/')
 }
 
 export const fetchFeed = () => async (dispatch, getState) => {
@@ -326,47 +326,3 @@ export const fetchProfileFollowings =
             console.log('problem')
         }
     }
-
-export const addNewTarget =
-    (targetName, folderID) => async (dispatch, getState) => {
-        try {
-            const { Token } = getState().auth
-            console.log(Token)
-            const response = await axios.post(BASE_URL + '/link/create', {
-                token: Token,
-                targetName: targetName,
-                folderID: folderID,
-            })
-
-            dispatch({
-                type: ADD_NEW_TARGET,
-                payload: null,
-            })
-
-            history.push('/')
-
-            /* let linksObj = {}
-            response.data.links.forEach(link => {
-                linksObj[link._id] = { ...link }
-            })
-
-             */
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-export const deleteTarget = (linkID, _id) => async (dispatch, getState) => {
-    try {
-        const { Token } = getState().auth
-        // console.log(Token)
-        const response = await axios.post(BASE_URL + `/link/delete/${linkID}`, {
-            token: Token,
-        })
-
-        return dispatch({
-            type: DELETE_TARGET,
-            payload: _id,
-        })
-    } catch (err) {}
-}

@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-    Box,
-    Button,
-    Flex,
-    HStack,
-    Input,
-    Link as ChakraLink,
-} from '@chakra-ui/react'
+import { Box, Flex, Link as ChakraLink } from '@chakra-ui/react'
 import { connect } from 'react-redux'
 import HeaderLoggedIn from './HeaderLoggedIn'
 import HeaderLoggedOut from './HeaderLoggedOut'

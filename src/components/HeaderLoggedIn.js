@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import {
     Button,
     HStack,
-    Icon,
     Link as ChakraLink,
     Avatar,
     useDisclosure,
@@ -10,16 +9,9 @@ import {
     Input,
     Text,
     Box,
+    useToast,
 } from '@chakra-ui/react'
-import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-} from '@chakra-ui/react'
+import { Modal, ModalOverlay, ModalContent, ModalBody } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { SearchIcon } from '@chakra-ui/icons'
 import { AiOutlineUser } from 'react-icons/ai'
@@ -125,9 +117,17 @@ function SearchModal(props) {
 }
 
 const HeaderLoggedIn = props => {
+    const toast = useToast()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const signOutHandler = () => {
-        props.signOut()
+        props.signOut().then(() => {
+            toast({
+                title: 'Successfully logged out',
+                status: 'success',
+                duration: 4000,
+                isClosable: true,
+            })
+        })
     }
     return (
         <HStack spacing={'2'} alignItems={'center'}>
