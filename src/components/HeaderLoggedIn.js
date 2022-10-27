@@ -130,7 +130,7 @@ const HeaderLoggedIn = props => {
     }
     return (
         <HStack spacing={'2'} alignItems={'center'}>
-            <SearchIcon onClick={onOpen} />
+            <SearchIcon _hover={{ cursor: 'pointer' }} onClick={onOpen} />
             <SearchModal isOpen={isOpen} onOpe={onOpen} onClose={onClose} />
             <ChakraLink as={Link} to={`/profile/${props.Username}`}>
                 <Avatar w={'8'} h={'8'} icon={<AiOutlineUser />} />
