@@ -64,6 +64,11 @@ const ViewPost = props => {
 
     const renderPost = () => {
         if (Object.keys(PostInfo).length !== 0) {
+            const date = new Date(PostInfo.createdDate)
+            const dateString = `${date.getDate()}/${
+                date.getMonth() + 1
+            }/${date.getFullYear()}`
+
             return (
                 <Flex
                     flexDirection={'column'}
@@ -76,8 +81,11 @@ const ViewPost = props => {
                     <HStack justifyContent={'space-between'}>
                         <HStack>
                             <Icon as={AiOutlineUser} />
-                            <Text>{PostInfo.author.username}</Text>
-                            <Text>02/10/2021</Text>
+                            <Link to={`/profile/${PostInfo.author.username}`}>
+                                <Text>{PostInfo.author.username}</Text>
+                            </Link>
+
+                            <Text>{dateString}</Text>
                         </HStack>
                         {props.PostInfo.author.username === props.MyUsername ? (
                             <HStack spacing={'.5rem'}>

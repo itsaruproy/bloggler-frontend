@@ -1,28 +1,67 @@
-import { Box, Text } from '@chakra-ui/react'
+import { Box, Heading, Text, Flex } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { fetchFeed } from '../actions'
 
 const EmptyHome = () => {
     return (
-        <Box>
-            <Text textAlign={'center'}>Your feed is empty</Text>
+        <Box pt={'5rem'}>
+            <Heading textAlign={'center'}>Your feed is empty</Heading>
+            <Text textAlign={'center'}>
+                Try using the search to find some articles
+            </Text>
         </Box>
     )
 }
 
-const showFeed = () => {}
+const ShowFeed = ({ Feed }) => {
+    return (
+        <Flex alignItems={'center'} flexDirection={'column'} gap={'1rem'}>
+            <Text fontWeight={'medium'}>
+                The Latest posts from the users that you follows
+            </Text>
+            <Flex direction={'column'} alignItems={'center'}>
+                {Feed.map(post => {
+                    const date = new Date(post.createdDate)
+                    const dateString = `${date.getDate()}/${
+                        date.getMonth() + 1
+                    }/${date.getFullYear()}`
+
+                    return (
+                        <Link key={post._id} to={`/post/${post._id}`}>
+                            <Box
+                                minW={'lg'}
+                                bg={'gray.100'}
+                                borderRadius={'md'}
+                                px={'1rem'}
+                                pb={'1rem'}
+                                _hover={{ bg: 'gray.200' }}
+                                border={'1px'}
+                                borderColor={'gray.300'}
+                            >
+                                <Heading fontWeight={'bold'}>
+                                    {post.title}
+                                </Heading>
+                                <Text>{post.author.username}</Text>
+                                <Text fontWeight={'light'}>{dateString}</Text>
+                            </Box>
+                        </Link>
+                    )
+                })}
+            </Flex>
+        </Flex>
+    )
+}
 
 const Home = props => {
-    console.log('Logging feed from home', props.Feed)
-    const { fetchFeed } = props
+    const { fetchFeed, Feed } = props
     useEffect(() => {
         console.log('Fetch feed useEffect ran')
         fetchFeed()
-        // fetch the users feed
-        // if there is no posts for that user render empty home other wise show all posts as links
     }, [fetchFeed])
-    return <Box>Welcome home buddy</Box>
+
+    return <>{Feed.length ? <ShowFeed Feed={Feed} /> : <EmptyHome />}</>
 }
 
 const mapStateToProps = state => {
