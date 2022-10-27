@@ -14,7 +14,7 @@ const EmptyHome = () => {
 const showFeed = () => {}
 
 const Home = props => {
-    console.log(props)
+    console.log('Logging feed from home', props.Feed)
     const { fetchFeed } = props
     useEffect(() => {
         console.log('Fetch feed useEffect ran')
@@ -25,4 +25,8 @@ const Home = props => {
     return <Box>Welcome home buddy</Box>
 }
 
-export default connect(null, { fetchFeed })(Home)
+const mapStateToProps = state => {
+    return { Feed: state.feed }
+}
+
+export default connect(mapStateToProps, { fetchFeed })(Home)

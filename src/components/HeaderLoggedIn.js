@@ -96,6 +96,7 @@ function SearchModal(props) {
                                 {posts.map(post => {
                                     return (
                                         <Link
+                                            key={post._id}
                                             to={`/post/${post._id}`}
                                             onClick={onClose}
                                         >

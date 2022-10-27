@@ -227,17 +227,17 @@ export const fetchFeed = () => async (dispatch, getState) => {
         })
         console.log(response.data)
 
-        let postsObj = {}
-        response.data.forEach(post => {
-            postsObj[post._id] = { ...post }
-        })
+        // let postsObj = {}
+        // response.data.forEach(post => {
+        //     postsObj[post._id] = { ...post }
+        // })
 
         /*
             dispatch feed data to feed reducer
         */
         dispatch({
             type: FETCH_FEED,
-            payload: postsObj,
+            payload: response.data,
         })
     } catch (e) {
         console.log('Feed Fetching problem: ', e)

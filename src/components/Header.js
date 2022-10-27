@@ -1,8 +1,16 @@
 import React from 'react'
-import { Box, Button, Flex, HStack, Input, Link } from '@chakra-ui/react'
+import {
+    Box,
+    Button,
+    Flex,
+    HStack,
+    Input,
+    Link as ChakraLink,
+} from '@chakra-ui/react'
 import { connect } from 'react-redux'
 import HeaderLoggedIn from './HeaderLoggedIn'
 import HeaderLoggedOut from './HeaderLoggedOut'
+import { Link } from 'react-router-dom'
 
 const Header = props => {
     return (
@@ -15,7 +23,9 @@ const Header = props => {
                 alignItems={'center'}
             >
                 <Box>
-                    <Link fontWeight={'semibold'}>Bloggler</Link>
+                    <ChakraLink as={Link} fontWeight={'semibold'} to={'/'}>
+                        Bloggler
+                    </ChakraLink>
                 </Box>
                 <Box display={'flex'} gap={'2'}>
                     {props.Token ? <HeaderLoggedIn /> : <HeaderLoggedOut />}
