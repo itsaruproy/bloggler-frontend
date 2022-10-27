@@ -9,6 +9,7 @@ import {
     Flex,
     Input,
     Text,
+    Box,
 } from '@chakra-ui/react'
 import {
     Modal,
@@ -29,6 +30,12 @@ import { BASE_URL } from '../constants'
 import axios from 'axios'
 
 function SearchModal(props) {
+    /*
+        we can make this as a separate component and then we can connect the redux state with this component as well 
+        lets try it tomorrow
+    
+    */
+
     const { isOpen, onOpen, onClose } = props
     const [posts, setPosts] = useState([])
     const [term, setTerm] = useState('')
@@ -43,6 +50,10 @@ function SearchModal(props) {
     }, [term])
 
     useEffect(() => {
+        if (!finalterm) {
+            setPosts([])
+            return
+        }
         if (finalterm) {
             async function fetchResults() {
                 try {
@@ -56,6 +67,8 @@ function SearchModal(props) {
             }
             fetchResults()
         }
+
+        return () => setPosts([]) && setFinalterm('')
     }, [finalterm])
 
     return (
@@ -75,15 +88,35 @@ function SearchModal(props) {
                             placeholder={'Search articles'}
                         />
                     </HStack>
-                    <ModalCloseButton />
+                    {/* <ModalCloseButton /> */}
 
-                    <ModalBody>
-                        <Flex direction={'column'}>
-                            {posts.map(post => {
-                                return <Text>{post.title}</Text>
-                            })}
-                        </Flex>
-                    </ModalBody>
+                    {posts.length ? (
+                        <ModalBody pb={'1rem'}>
+                            <Flex direction={'column'}>
+                                {posts.map(post => {
+                                    return (
+                                        <Link
+                                            to={`/post/${post._id}`}
+                                            onClick={onClose}
+                                        >
+                                            <Box
+                                                p={'2'}
+                                                _hover={{ bg: 'gray.100' }}
+                                                borderRadius={'md'}
+                                            >
+                                                <Text fontWeight={'bold'}>
+                                                    {post.title}
+                                                </Text>
+                                                <Text>
+                                                    {post.author.username}
+                                                </Text>
+                                            </Box>
+                                        </Link>
+                                    )
+                                })}
+                            </Flex>
+                        </ModalBody>
+                    ) : null}
                 </ModalContent>
             </Modal>
         </>
