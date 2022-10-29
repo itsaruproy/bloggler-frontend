@@ -21,8 +21,10 @@ const ShowFeed = ({ Feed }) => {
             <Text fontWeight={'medium'}>
                 The Latest posts from the users that you follows
             </Text>
-            <Flex direction={'column'} alignItems={'center'}>
+            <Flex direction={'column'} alignItems={'center'} gap={'1rem'}>
                 {Feed.map(post => {
+                    if (post.title.length >= 22)
+                        post.title = post.title.slice(0, 20) + '...'
                     const date = new Date(post.createdDate)
                     const dateString = `${date.getDate()}/${
                         date.getMonth() + 1
