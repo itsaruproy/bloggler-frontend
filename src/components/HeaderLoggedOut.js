@@ -1,4 +1,4 @@
-import { HStack, Input, Button, useToast } from '@chakra-ui/react'
+import { HStack, Input, Button, useToast, Spinner } from '@chakra-ui/react'
 import React, { useState } from 'react'
 
 import { connect } from 'react-redux'
@@ -7,8 +7,10 @@ import { signIn } from '../actions'
 const HeaderLoggedOut = props => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [loginClicked, setLoginClicked] = useState(false)
     const toast = useToast()
     const onSubmitHandler = () => {
+        setLoginClicked(true)
         props
             .signIn(username, password)
             .then(() => {})
@@ -19,6 +21,7 @@ const HeaderLoggedOut = props => {
                     duration: 4000,
                     isClosable: true,
                 })
+                setLoginClicked(false)
             })
     }
 
@@ -46,9 +49,17 @@ const HeaderLoggedOut = props => {
                     placeholder={'Password'}
                 />
             </HStack>
-            <Button onClick={onSubmitHandler} size={'sm'} colorScheme={'teal'}>
-                Sign In
-            </Button>
+            {loginClicked ? (
+                <Spinner />
+            ) : (
+                <Button
+                    onClick={onSubmitHandler}
+                    size={'sm'}
+                    colorScheme={'teal'}
+                >
+                    Sign In
+                </Button>
+            )}
         </HStack>
     )
 }
