@@ -178,31 +178,39 @@ export const signUp =
     }
 
 export const signIn = (username, password) => async (dispatch, getState) => {
-    try {
-        const response = await axios.post(BASE_URL + '/login', {
-            username,
-            password,
-        })
-        // console.log(response.data);
-        if (response.data) {
-            // navigate("/")
-            console.log(response.data)
-            // console.log("logged in");
-            localStorage.setItem('bloggler-token', response.data.token)
-            localStorage.setItem('bloggler-username', response.data.username)
-            dispatch({
-                type: SIGN_IN,
-                payload: {
-                    token: response.data.token,
-                    username: response.data.username,
-                },
+    return new Promise(async (resolve, reject) => {
+        try {
+            const response = await axios.post(BASE_URL + '/login', {
+                username,
+                password,
             })
-        } else {
-            // alert("Incorrenct username or password")
+            // console.log(response.data);
+            if (response.data) {
+                // navigate("/")
+                console.log(response.data)
+                // console.log("logged in");
+                localStorage.setItem('bloggler-token', response.data.token)
+                localStorage.setItem(
+                    'bloggler-username',
+                    response.data.username
+                )
+                dispatch({
+                    type: SIGN_IN,
+                    payload: {
+                        token: response.data.token,
+                        username: response.data.username,
+                    },
+                })
+                resolve()
+            } else {
+                // alert("Incorrenct username or password")
+                reject()
+            }
+        } catch (e) {
+            console.log('There was a problem.')
+            reject()
         }
-    } catch (e) {
-        console.log('There was a problem.')
-    }
+    })
 }
 
 export const signOut = () => async (dispatch, getState) => {

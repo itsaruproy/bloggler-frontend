@@ -1,4 +1,4 @@
-import { HStack, Input, Button } from '@chakra-ui/react'
+import { HStack, Input, Button, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 
 import { connect } from 'react-redux'
@@ -7,9 +7,19 @@ import { signIn } from '../actions'
 const HeaderLoggedOut = props => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-
+    const toast = useToast()
     const onSubmitHandler = () => {
-        props.signIn(username, password)
+        props
+            .signIn(username, password)
+            .then(() => {})
+            .catch(() => {
+                toast({
+                    title: 'Invalid Username or Password',
+                    status: 'error',
+                    duration: 4000,
+                    isClosable: true,
+                })
+            })
     }
 
     return (
